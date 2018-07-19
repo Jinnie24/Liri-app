@@ -36,12 +36,25 @@ function getCommand(command, param){
             doList(); 
             break;
         default: 
-            console.log("Invalid command. Please type any of the following commnds: my-tweets spotify-this-song movie-this or do-what-it-says");
+            console.log("Command isn't recognized. Liri knows folowing commands: my-tweets spotify-this-song movie-this or do-what-it-says");
         }
 
         
 
 }
+function doList(){
+	fs.readFile("random.txt", "utf8", function(error, data){
+
+		if (error){ 
+			return console.log(error);
+		}
+
+		var randomArr = data.split(',');
+
+		getCommand(randomArr[0], randomArr[1]);
+	});
+}
+
 function getTweets(){
 
 	var params = {screen_name: 'Jinnie10747761', count: 20, exclude_replies:true, trim_user:true};
@@ -110,18 +123,5 @@ function getSong(newSong){
         }
     });
  }
-
- function doList(){
-	fs.readFile("random.txt", "utf8", function(error, data){
-
-		if (error){ 
-			return console.log(error);
-		}
-
-		var randomArr = data.split(',');
-
-		getCommand(randomArr[0], randomArr[1]);
-	});
-}
 
  getCommand(command, param);
